@@ -4,7 +4,8 @@ import requests_html
 import lxml.html.clean
 import pandas as pd
 import numpy as np
-
+from Advisor import get_user_input, recommend_portfolio
+from Assessment import risk_assessment_questionnaire
 
 app = Flask(__name__)
 recommendations=[]
@@ -22,7 +23,9 @@ def Faqs():
 
 @app.route('/Howitworks')
 def Howitworks():
-   return render_template("Howitworks.html")
+    age, income, risk_tolerance = get_user_input()
+    recommended_portfolio = recommend_portfolio(age, income, risk_tolerance)
+   return render_template("Howitworks.html", recommended_portfolio = recommended_portfolio)
 
 
 @app.route('/Risk')
